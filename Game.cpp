@@ -1,10 +1,14 @@
 #include <SFML/Graphics.hpp>
+#include <string>
 
+#include "Constants.hpp"
+#include "Map.hpp"
 #include "Chel.hpp"
 #include "Game.hpp"
 
 
-void Game::init() {
+
+int Game::init() {
 	//Init window & view
 	window.create(sf::VideoMode((int)DEF_WIDTH, (int)DEF_HEIGHT), "Hi there!", sf::Style::Close);
 
@@ -13,6 +17,13 @@ void Game::init() {
 
 	//Init FPS settings
 	window.setFramerateLimit(60);
+
+	if (!font.loadFromFile("resources/sansation.ttf"))
+	{
+		return -1;
+	}
+
+	return 0;
 }
 
 void Game::onResize(sf::Vector2f size) {
@@ -29,9 +40,22 @@ void Game::runGame() {
 
 	sf::Event event;
 	Chel chel;
+	Map map;
+
+	sf::Color bg_color = sf::Color(147, 163, 188);
 
 	//start with lower resolution
 	onResize(sf::Vector2f(1024.f, 576.f));
+
+	//fps init
+	float fps;
+	sf::Clock clock = sf::Clock::Clock();
+	sf::Time previousTime = clock.getElapsedTime();
+	sf::Time currentTime;
+	sf::Text fps_text;
+	fps_text.setFont(font);
+	fps_text.setFillColor(sf::Color(13, 19, 23));
+	fps_text.setPosition(10, 10);
 
 
 	while (window.isOpen())
@@ -71,11 +95,27 @@ void Game::runGame() {
 			}
 			}
 		}
-		chel.updating();
+		chel.updating(&map);
 
-		window.clear();
+		window.clear(bg_color);
 
 		chel.draw(window);
+
+	
+
+
+
+		//////////////FPS///////////////
+		currentTime = clock.getElapsedTime();
+		fps = 1.0f / (currentTime.asSeconds() - previousTime.asSeconds()); // the asSeconds returns a float
+
+		fps_text.setString(std::to_string((int)floor(fps)));
+		window.draw(fps_text);
+
+		previousTime = currentTime;
+		////////////////////////////////
+
+
 
 		window.display();
 	}

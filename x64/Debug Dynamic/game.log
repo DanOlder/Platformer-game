@@ -9,4 +9,9 @@
   C:\Users\Daniel af\source\repos\game\resources\sansation.ttf
           2 file(s) copied.
   Chel.cpp
+  Game.cpp
+  Map.cpp
+  main.cpp
+  Generating Code...
+c:\users\daniel af\source\repos\game\map.cpp(64): warning C4715: 'Map::checkCollision': not all control paths return a value
   game.vcxproj -> C:\Users\Daniel af\source\repos\game\x64\Debug Dynamic\game.exe
