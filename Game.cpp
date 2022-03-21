@@ -6,6 +6,13 @@
 #include "Chel.hpp"
 #include "Game.hpp"
 
+/////////////////////////////////////
+////////////////add://///////////////
+//Walk acceleration//////////////////
+//Shift acceleration/////////////////
+//Disable in the air moving//////////
+//Every platform collision checking//
+/////////////////////////////////////
 
 
 int Game::init() {
@@ -18,6 +25,10 @@ int Game::init() {
 	//Init FPS settings
 	window.setFramerateLimit(60);
 
+	//Disable key repeating
+	window.setKeyRepeatEnabled(false);
+
+	//Init font
 	if (!font.loadFromFile("resources/sansation.ttf"))
 	{
 		return -1;
@@ -54,8 +65,8 @@ void Game::runGame() {
 	sf::Time currentTime;
 	sf::Text fps_text;
 	fps_text.setFont(font);
-	fps_text.setFillColor(sf::Color(13, 19, 23));
-	fps_text.setPosition(10, 10);
+	fps_text.setFillColor(sf::Color(100, 0, 0));
+	fps_text.setPosition(20, 20);
 
 
 	while (window.isOpen())
@@ -71,26 +82,50 @@ void Game::runGame() {
 
 			case sf::Event::KeyPressed: {
 
+				//game settings
 				if (event.key.code == sf::Keyboard::Num1)
 				{
 					onResize(sf::Vector2f(1024.f, 576.f));
+					break;
 				}
-				if (event.key.code == sf::Keyboard::Num2)
+				else if (event.key.code == sf::Keyboard::Num2)
 				{
 					onResize(sf::Vector2f(1280.f, 720.f));
+					break;
 				}
-				if (event.key.code == sf::Keyboard::Num3)
+				else if (event.key.code == sf::Keyboard::Num3)
 				{
 					onResize(sf::Vector2f(1600.f, 900.f));
+					break;
 				}
-				if (event.key.code == sf::Keyboard::Num4)
+				else if (event.key.code == sf::Keyboard::Num4)
 				{
-					onResize(sf::Vector2f(1920.f, 1080.f));
+					onResize(sf::Vector2f(1760.f, 990.f));
+					break;
 				}
-				if (event.key.code == sf::Keyboard::Escape)
+				else if (event.key.code == sf::Keyboard::Escape)
 				{
 					window.close();
 					return;
+				}
+
+				//jump
+				else if (event.key.code == sf::Keyboard::Space)
+				{
+					chel.getReadyToJump();
+					break;
+				}
+				
+
+
+			}
+			case sf::Event::KeyReleased: {
+
+				//jump
+				if (event.key.code == sf::Keyboard::Space)
+				{
+					chel.Jump();
+					break;
 				}
 			}
 			}
@@ -99,6 +134,8 @@ void Game::runGame() {
 
 		window.clear(bg_color);
 
+
+		map.draw(window);
 		chel.draw(window);
 
 	

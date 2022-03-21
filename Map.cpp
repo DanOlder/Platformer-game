@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <algorithm>
 
 #include "Constants.hpp"
 #include "Map.hpp"
@@ -25,40 +26,63 @@ Map::Map() {
 	rwall.top = 0;
 	rwall.height = 1080;
 	rwall.width = 100;
-	
 
-	lwall_x = 20;
-	rwall_x = 1900;
-	floor_y = 1060;
-	ceiling_y = 20;
+	//draw
+	dFloor.setSize(sf::Vector2f(1980, 100));
+	dFloor.setPosition(sf::Vector2f(0,1060));
+	dFloor.setFillColor(sf::Color(50,50,50));
+
+	dCeiling.setSize(sf::Vector2f(1980, 120));
+	dCeiling.setPosition(sf::Vector2f(0,-100));
+	dCeiling.setFillColor(sf::Color(50, 50, 50));
+
+	dLWall.setSize(sf::Vector2f(120, 1080));
+	dLWall.setPosition(sf::Vector2f(-100,0));
+	dLWall.setFillColor(sf::Color(50, 50, 50));
+
+	dRWall.setSize(sf::Vector2f(100, 1080));
+	dRWall.setPosition(sf::Vector2f(1900,0));
+	dRWall.setFillColor(sf::Color(50, 50, 50));
 
 }
 
-float Map::checkCollision(sf::Vector2f coords, Directions dir) {
+void Map::draw(sf::RenderWindow& window) {
+
+	window.draw(dFloor);
+	window.draw(dCeiling);
+	window.draw(dLWall);
+	window.draw(dRWall);
+}
+
+float Map::checkCollision(sf::Vector2f coords, sf::FloatRect hitbox, float speed, Directions dir) {
 
 	if (dir == LEFT) {
-		if (lwall.contains(coords.x - CHEL_MAX_SPEED, coords.y)) {
-			return coords.x - lwall_x;
+		hitbox.left -= speed;
+		if (lwall.intersects(hitbox)){			// future: check every existing block for collision
+			return (hitbox.left+speed) - (lwall.left+lwall.width); 
 		}
-		else return CHEL_MAX_SPEED+1;
+		else return speed;
 	}
-	if (dir == RIGHT) {
-		if (rwall.contains(coords.x + 50 + CHEL_MAX_SPEED, coords.y)) {
-			return rwall_x - (coords.x+50);
+	else if (dir == RIGHT) {
+		hitbox.left += speed;
+		if (rwall.intersects(hitbox)){					//rwall.contains(coords.x + 50 + CHEL_MAX_SPEED, coords.y)) {
+			return rwall.left - (hitbox.left-speed+hitbox.width);									//rwall_x - (coords.x+50);
 		}
-		else return CHEL_MAX_SPEED + 1;
+		else return speed;
 	}
-	if (dir == UP) {
-		if (ceiling.contains(coords.x, coords.y - CHEL_MAX_SPEED)) {
-			return coords.y - ceiling_y;
+	else if (dir == UP) {
+		hitbox.top -= speed;
+		if (ceiling.intersects(hitbox)){											//(ceiling.contains(coords.x, coords.y - CHEL_MAX_SPEED)) {
+			return (hitbox.top + speed) - (ceiling.top + ceiling.height);			//coords.y - ceiling_y;
 		}
-		else return CHEL_MAX_SPEED + 1;
+		else return speed;
 	}
-	if (dir == DOWN) {
-		if (floor.contains(coords.x, coords.y + 50 + CHEL_MAX_SPEED)) {
-			return floor_y - (coords.y + 50);
+	else if (dir == DOWN) {
+		hitbox.top += speed;
+		if (floor.intersects(hitbox)){																		//(floor.contains(coords.x, coords.y + 50 + CHEL_MAX_SPEED)) {
+			return floor.top - (hitbox.top-speed+hitbox.height);																//floor_y - (coords.y + 50);
 		}
-		else return CHEL_MAX_SPEED + 1;
+		else return speed;
 	}
 	
 }

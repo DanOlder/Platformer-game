@@ -12,5 +12,8 @@ enum Directions {
 
 
 #define CHEL_MAX_SPEED 15.f
-#define CHEL_VERTICAL_SPEED 40.f
-#define GRAVITY 25.f
+#define CHEL_JUMP_SPEED 23.f
+#define GRAVITY 18.f
+
+#define MAX_HOLDING_SPACE_TIME 1.f
+#define MAX_JUMP_HEIGHT 500.f

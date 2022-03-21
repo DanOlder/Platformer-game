@@ -6,12 +6,14 @@ private:
 	sf::FloatRect ceiling;
 	sf::FloatRect lwall;
 	sf::FloatRect rwall;
-	
-	float lwall_x;
-	float rwall_x;
-	float floor_y;
-	float ceiling_y;
+
+	//draw
+	sf::RectangleShape dFloor;
+	sf::RectangleShape dCeiling;
+	sf::RectangleShape dLWall;
+	sf::RectangleShape dRWall;
 public:
 	Map();
-	float checkCollision(sf::Vector2f, Directions);
+	void draw(sf::RenderWindow&);
+	float checkCollision(sf::Vector2f, sf::FloatRect, float, Directions);
 };
