@@ -4,8 +4,12 @@ class Chel {
 private:
 	sf::Vector2f coords;
 	sf::FloatRect hitbox;
+	float speed_x;
+	float speed_y;
+
 	bool readyToJump;
-	float jumpHeight;
+	bool inAir;
+
 	float holdingSpaceTimer;
 	float holdingSpaceTimerStart;
 

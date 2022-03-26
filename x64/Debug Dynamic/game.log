@@ -9,4 +9,10 @@
   C:\Users\Daniel af\source\repos\game\resources\sansation.ttf
           2 file(s) copied.
   Chel.cpp
+c:\users\daniel af\source\repos\game\chel.cpp(52): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Game.cpp
+  Map.cpp
+  main.cpp
+  Generating Code...
+c:\users\daniel af\source\repos\game\map.cpp(88): warning C4715: 'Map::checkCollision': not all control paths return a value
   game.vcxproj -> C:\Users\Daniel af\source\repos\game\x64\Debug Dynamic\game.exe

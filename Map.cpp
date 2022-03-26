@@ -58,29 +58,29 @@ float Map::checkCollision(sf::Vector2f coords, sf::FloatRect hitbox, float speed
 
 	if (dir == LEFT) {
 		hitbox.left -= speed;
-		if (lwall.intersects(hitbox)){			// future: check every existing block for collision
+		if (lwall.intersects(hitbox)){
 			return (hitbox.left+speed) - (lwall.left+lwall.width); 
 		}
 		else return speed;
 	}
 	else if (dir == RIGHT) {
 		hitbox.left += speed;
-		if (rwall.intersects(hitbox)){					//rwall.contains(coords.x + 50 + CHEL_MAX_SPEED, coords.y)) {
-			return rwall.left - (hitbox.left-speed+hitbox.width);									//rwall_x - (coords.x+50);
+		if (rwall.intersects(hitbox)){
+			return rwall.left - (hitbox.left-speed+hitbox.width);
 		}
 		else return speed;
 	}
 	else if (dir == UP) {
 		hitbox.top -= speed;
-		if (ceiling.intersects(hitbox)){											//(ceiling.contains(coords.x, coords.y - CHEL_MAX_SPEED)) {
-			return (hitbox.top + speed) - (ceiling.top + ceiling.height);			//coords.y - ceiling_y;
+		if (ceiling.intersects(hitbox)){
+			return (hitbox.top + speed) - (ceiling.top + ceiling.height);
 		}
 		else return speed;
 	}
 	else if (dir == DOWN) {
 		hitbox.top += speed;
-		if (floor.intersects(hitbox)){																		//(floor.contains(coords.x, coords.y + 50 + CHEL_MAX_SPEED)) {
-			return floor.top - (hitbox.top-speed+hitbox.height);																//floor_y - (coords.y + 50);
+		if (floor.intersects(hitbox)){
+			return floor.top - (hitbox.top-speed+hitbox.height);
 		}
 		else return speed;
 	}
