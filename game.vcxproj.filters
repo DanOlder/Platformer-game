@@ -30,6 +30,12 @@
     <ClCompile Include="Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="extlibs\bin\x64\sfml-audio-2.dll">
@@ -673,6 +679,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Constants.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

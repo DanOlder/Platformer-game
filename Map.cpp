@@ -2,6 +2,8 @@
 #include <algorithm>
 
 #include "Constants.hpp"
+#include "GameTime.hpp"
+#include "Animation.hpp"
 #include "Map.hpp"
 #include "Chel.hpp"
 #include "Game.hpp"

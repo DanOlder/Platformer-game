@@ -2,15 +2,20 @@
 #include <string>
 
 #include "Constants.hpp"
+#include "GameTime.hpp"
+#include "Animation.hpp"
 #include "Map.hpp"
 #include "Chel.hpp"
 #include "Game.hpp"
 
 /////////////////////////////////////
 ////////////////add://///////////////
+//Make own sprite sheet//////////////
+//Change textureRect calculation/////
+//Add Time class/////////////////////+
 //Platforms//////////////////////////
 //Every platform collision checking//
-//Map scrolling/////////////////////
+//Map scrolling//////////////////////
 //Shift acceleration/////////////////
 /////////////////////////////////////
 //Remove jumping while in the air////
@@ -29,11 +34,14 @@ int Game::init() {
 	//Disable key repeating
 	window.setKeyRepeatEnabled(false);
 
+	//Init background
+	if (!bg.loadFromFile("resources/test_bg.jpg")) return -1;
+	bgShape.setTexture(&bg);
+	bgShape.setPosition(0.0f,0.0f);
+	bgShape.setSize(sf::Vector2f(DEF_WIDTH,DEF_HEIGHT));
+
 	//Init font
-	if (!font.loadFromFile("resources/sansation.ttf"))
-	{
-		return -1;
-	}
+	if (!font.loadFromFile("resources/sansation.ttf")) return -1;
 
 	return 0;
 }
@@ -51,6 +59,8 @@ void Game::onResize(sf::Vector2f size) {
 void Game::runGame() {
 
 	sf::Event event;
+
+	GameTime gameTime;
 	Chel chel;
 	Map map;
 
@@ -61,8 +71,7 @@ void Game::runGame() {
 
 	//fps init
 	float fps;
-	sf::Clock clock;
-	float deltaTime = 0.0f;
+
 	sf::Text fps_text;
 	fps_text.setFont(font);
 	fps_text.setFillColor(sf::Color(100, 0, 0));
@@ -130,10 +139,11 @@ void Game::runGame() {
 			}
 			}
 		}
-		chel.updating(&map);
+		chel.updating(&map, &gameTime);
 
 		window.clear(bg_color);
 
+		window.draw(bgShape);
 
 		map.draw(window);
 		chel.draw(window);
@@ -143,8 +153,7 @@ void Game::runGame() {
 
 
 		//////////////FPS///////////////
-		deltaTime = clock.restart().asSeconds();
-		fps = 1.0f / deltaTime;
+		fps = 1.0f / gameTime.refresh();
 
 		fps_text.setString(std::to_string((int)floor(fps)));
 		window.draw(fps_text);

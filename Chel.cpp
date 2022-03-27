@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "Constants.hpp"
+#include "GameTime.hpp"
+#include "Animation.hpp"
 #include "Map.hpp"
 #include "Chel.hpp"
 #include "Game.hpp"
@@ -16,15 +18,21 @@ Chel::Chel() {
 
 	hitbox.left = coords.x;
 	hitbox.top = coords.y;
-	hitbox.width = 50.f;
-	hitbox.height = 100.f;
+	hitbox.width = 90.f;
+	hitbox.height = 92.f;
 
 	readyToJump = false;
 	inAir = true;
 	holdingSpaceTimer = 0.f;
 
-	square.setSize((sf::Vector2f(hitbox.width, hitbox.height)));
-	square.setFillColor(sf::Color(13, 19, 23));
+	square.setSize((sf::Vector2f(hitbox.width, hitbox.height)));/////////
+	square.setFillColor(sf::Color(13, 19, 23));//////////////////////////
+
+	//animation (vector is how much sprites in the sheet(x and y))
+	if (!chelTexture.loadFromFile("resources/test_sprites.png")) exit(666);
+	chelShape.setSize((sf::Vector2f(hitbox.width, hitbox.height)));
+	chelShape.setTexture(&chelTexture);
+	chelAnimation.init(&chelTexture, sf::Vector2u(4,1), 0.1f);
 }
 
 sf::Vector2f Chel::getCoords() {
@@ -56,11 +64,20 @@ void Chel::Jump() {
 }
 
 void Chel::draw(sf::RenderWindow& window) {
-	square.setPosition(coords.x, coords.y);
-	window.draw(square);
+	//hitbox
+	//square.setPosition(coords);/////
+	//window.draw(square);////////////////////////
+
+	//sprite
+	chelShape.setPosition(coords);
+	window.draw(chelShape);
 }
 
-void Chel::updating(Map* map) {
+void Chel::updating(Map* map, GameTime* gameTime) {
+
+	//params in update are row and deltaTime
+	chelAnimation.update(0,gameTime->deltaTime);//mb move in the end of method
+	chelShape.setTextureRect(chelAnimation.spriteRect);
 
 	if (inAir) {				//return when chel landed
 

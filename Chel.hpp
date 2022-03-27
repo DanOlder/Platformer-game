@@ -16,6 +16,12 @@ private:
 	sf::Clock chelClock;
 
 	sf::RectangleShape square; //temp until the sprite is made
+
+	//animation
+	Animation chelAnimation;
+	sf::RectangleShape chelShape;
+	sf::Texture chelTexture;
+
 public:
 	Chel();
 	sf::Vector2f getCoords();
@@ -25,7 +31,7 @@ public:
 	void Jump();
 
 
-	void updating(Map*);
+	void updating(Map*, GameTime*);
 	void draw(sf::RenderWindow&);
 
 	
