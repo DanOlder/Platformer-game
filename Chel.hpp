@@ -11,7 +11,6 @@ private:
 	bool inAir;
 
 	float holdingSpaceTimer;
-	float holdingSpaceTimerStart;
 
 	//for jump timer
 	sf::Clock chelClock;

@@ -8,9 +8,12 @@
 
 /////////////////////////////////////
 ////////////////add://///////////////
-//Shift acceleration/////////////////
+//Platforms//////////////////////////
 //Every platform collision checking//
+//Map scrolling/////////////////////
+//Shift acceleration/////////////////
 /////////////////////////////////////
+//Remove jumping while in the air////
 
 
 int Game::init() {
@@ -58,9 +61,8 @@ void Game::runGame() {
 
 	//fps init
 	float fps;
-	sf::Clock clock = sf::Clock::Clock();
-	sf::Time previousTime = clock.getElapsedTime();
-	sf::Time currentTime;
+	sf::Clock clock;
+	float deltaTime = 0.0f;
 	sf::Text fps_text;
 	fps_text.setFont(font);
 	fps_text.setFillColor(sf::Color(100, 0, 0));
@@ -141,13 +143,11 @@ void Game::runGame() {
 
 
 		//////////////FPS///////////////
-		currentTime = clock.getElapsedTime();
-		fps = 1.0f / (currentTime.asSeconds() - previousTime.asSeconds()); // the asSeconds returns a float
+		deltaTime = clock.restart().asSeconds();
+		fps = 1.0f / deltaTime;
 
 		fps_text.setString(std::to_string((int)floor(fps)));
 		window.draw(fps_text);
-
-		previousTime = currentTime;
 		////////////////////////////////
 
 

@@ -40,13 +40,13 @@ void Chel::getReadyToJump() {
 	readyToJump = true;
 
 	//start timer
-	holdingSpaceTimerStart = chelClock.getElapsedTime().asSeconds();
+	chelClock.restart().asSeconds();
 	//printf("%f\n", holdingSpaceTimerStart);
 }
 
 void Chel::Jump() {
 	//check timer 
-	holdingSpaceTimer = (chelClock.getElapsedTime().asSeconds() - holdingSpaceTimerStart);
+	holdingSpaceTimer = chelClock.getElapsedTime().asSeconds();
 	//printf("%f\n", holdingSpaceTimer);
 	if (holdingSpaceTimer > MAX_HOLDING_SPACE_TIME) holdingSpaceTimer = MAX_HOLDING_SPACE_TIME;
 	speed_y = (holdingSpaceTimer / MAX_HOLDING_SPACE_TIME) * MAX_JUMP_SPEED;

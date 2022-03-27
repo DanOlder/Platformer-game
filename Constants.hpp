@@ -20,5 +20,5 @@ enum Directions {
 #define G 0.5
 
 //jumping
-#define MAX_HOLDING_SPACE_TIME 0.5
-#define MAX_JUMP_SPEED 25.f
+#define MAX_HOLDING_SPACE_TIME 0.5f
+#define MAX_JUMP_SPEED 25.0f
