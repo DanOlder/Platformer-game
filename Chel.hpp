@@ -3,9 +3,7 @@
 class Chel {
 private:
 	sf::Vector2f coords;
-	sf::FloatRect hitbox;
-	float speed_x;
-	float speed_y;
+	sf::Vector2f speed;
 
 	bool readyToJump;
 	bool inAir;
@@ -15,9 +13,7 @@ private:
 	//for jump timer
 	sf::Clock chelClock;
 
-	sf::RectangleShape square; //temp until the sprite is made
-
-	//animation
+	//animation & hitbox
 	Animation chelAnimation;
 	sf::RectangleShape chelShape;
 	sf::Texture chelTexture;
@@ -25,11 +21,9 @@ private:
 public:
 	Chel();
 	sf::Vector2f getCoords();
-	sf::FloatRect getHitbox();
 
 	void getReadyToJump();
 	void Jump();
-
 
 	void updating(Map*, GameTime*);
 	void draw(sf::RenderWindow&);

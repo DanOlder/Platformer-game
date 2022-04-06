@@ -2,18 +2,11 @@
 
 class Map {
 private:
-	sf::FloatRect floor;
-	sf::FloatRect ceiling;
-	sf::FloatRect lwall;
-	sf::FloatRect rwall;
+	std::vector<sf::RectangleShape> platforms;
 
-	//draw
-	sf::RectangleShape dFloor;
-	sf::RectangleShape dCeiling;
-	sf::RectangleShape dLWall;
-	sf::RectangleShape dRWall;
 public:
 	Map();
+	void addPlatform(sf::Vector2f, sf::Vector2f, sf::Color);
 	void draw(sf::RenderWindow&);
-	float checkCollision(sf::Vector2f, sf::FloatRect, float, Directions);
+	bool checkCollision(sf::FloatRect, Directions, sf::Vector2f*);
 };

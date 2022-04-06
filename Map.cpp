@@ -9,57 +9,117 @@
 #include "Game.hpp"
 
 Map::Map() {
-	floor.left = 0;
-	floor.top = 1060;
-	floor.height = 100;
-	floor.width = 1980;
 
-	ceiling.left = 0;
-	ceiling.top = -100;
-	ceiling.height = 120;
-	ceiling.width = 1980;
+	//size in blocks, position in blocks, and color
+	addPlatform(sf::Vector2f(32, 1), sf::Vector2f(0, 17), sf::Color(50, 50, 50));
+	addPlatform(sf::Vector2f(32, 1), sf::Vector2f(0, 0), sf::Color(50, 50, 50));
+	addPlatform(sf::Vector2f(1, 18), sf::Vector2f(0, 0), sf::Color(50, 50, 50));
+	addPlatform(sf::Vector2f(1, 18), sf::Vector2f(31, 0), sf::Color(50, 50, 50));
 
-	lwall.left = -100;
-	lwall.top = 0;
-	lwall.height = 1080;
-	lwall.width = 120;
+	addPlatform(sf::Vector2f(5, 1), sf::Vector2f(5, 3), sf::Color(50, 50, 50));
+	addPlatform(sf::Vector2f(5, 1), sf::Vector2f(10, 8), sf::Color(50, 50, 50));
+	addPlatform(sf::Vector2f(5, 1), sf::Vector2f(15, 11), sf::Color(50, 50, 50));
+	addPlatform(sf::Vector2f(5, 1), sf::Vector2f(20, 15), sf::Color(50, 50, 50));
+}
 
-	rwall.left = 1900;
-	rwall.top = 0;
-	rwall.height = 1080;
-	rwall.width = 100;
+void Map::addPlatform(sf::Vector2f size, sf::Vector2f position, sf::Color color) {	//sprite will be instead of color
 
-	//draw
-	dFloor.setSize(sf::Vector2f(1980, 100));
-	dFloor.setPosition(sf::Vector2f(0,1060));
-	dFloor.setFillColor(sf::Color(50,50,50));
+	size.x *= BLOCK_SIZE;
+	size.y *= BLOCK_SIZE;
+	position.x *= BLOCK_SIZE;
+	position.y *= BLOCK_SIZE;
 
-	dCeiling.setSize(sf::Vector2f(1980, 120));
-	dCeiling.setPosition(sf::Vector2f(0,-100));
-	dCeiling.setFillColor(sf::Color(50, 50, 50));
+	sf::RectangleShape platform;
 
-	dLWall.setSize(sf::Vector2f(120, 1080));
-	dLWall.setPosition(sf::Vector2f(-100,0));
-	dLWall.setFillColor(sf::Color(50, 50, 50));
+	platform.setSize(size);
+	platform.setPosition(position);
+	platform.setFillColor(color);
 
-	dRWall.setSize(sf::Vector2f(100, 1080));
-	dRWall.setPosition(sf::Vector2f(1900,0));
-	dRWall.setFillColor(sf::Color(50, 50, 50));
-
+	platforms.push_back(platform);
 }
 
 void Map::draw(sf::RenderWindow& window) {
 
-	window.draw(dFloor);
-	window.draw(dCeiling);
-	window.draw(dLWall);
-	window.draw(dRWall);
+	//draw only if object is on the screen
+
+	for (auto& i : platforms) {
+		window.draw(i);
+	}
 }
 
-float Map::checkCollision(sf::Vector2f coords, sf::FloatRect hitbox, float speed, Directions dir) {
 
+
+bool Map::checkCollision(sf::FloatRect hitbox, Directions dir, sf::Vector2f* pos) {
+	if (dir == LEFT) {
+		for (auto& i : platforms) {
+			sf::FloatRect tempRect = i.getGlobalBounds();
+			if (tempRect.intersects(hitbox)) {
+				do {
+					hitbox.left += 1;
+				} while (tempRect.intersects(hitbox));
+				pos->x = hitbox.left;
+				return true;
+			}
+		}
+	}
+	else if (dir == RIGHT) {
+		for (auto& i : platforms) {
+			sf::FloatRect tempRect = i.getGlobalBounds();
+			if (tempRect.intersects(hitbox)) {
+				do {
+					hitbox.left -= 1;
+				} while (tempRect.intersects(hitbox));
+				pos->x = hitbox.left;
+				return true;
+			}
+		}
+	}
+	else if (dir == UP) {
+		for (auto& i : platforms) {
+			sf::FloatRect tempRect = i.getGlobalBounds();
+			if (tempRect.intersects(hitbox)) {
+				do {
+					hitbox.top += 1;
+				} while (tempRect.intersects(hitbox));
+				pos->y = hitbox.top;
+				return true;
+			}
+		}
+	}
+	else if (dir == DOWN) {
+		for (auto& i : platforms) {
+			sf::FloatRect tempRect = i.getGlobalBounds();
+			if (tempRect.intersects(hitbox)) {
+				do {
+					hitbox.top -= 1;
+				} while (tempRect.intersects(hitbox));
+				pos->y = hitbox.top;
+				return true;
+			}
+		}
+	}
+
+	return false;
+
+
+
+
+
+	/*
 	if (dir == LEFT) {
 		hitbox.left -= speed;
+
+
+
+		for (auto& i : platforms) {
+			sf::FloatRect tempRect = i.getGlobalBounds();
+			if (tempRect.intersects(hitbox)) {
+
+			}
+		}
+
+
+
 		if (lwall.intersects(hitbox)){
 			return (hitbox.left+speed) - (lwall.left+lwall.width); 
 		}
@@ -86,5 +146,6 @@ float Map::checkCollision(sf::Vector2f coords, sf::FloatRect hitbox, float speed
 		}
 		else return speed;
 	}
-	
+	*/
+
 }
