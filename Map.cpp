@@ -10,16 +10,18 @@
 
 Map::Map() {
 
-	//size in blocks, position in blocks, and color
-	addPlatform(sf::Vector2f(32, 1), sf::Vector2f(0, 17), sf::Color(50, 50, 50));
-	addPlatform(sf::Vector2f(32, 1), sf::Vector2f(0, 0), sf::Color(50, 50, 50));
-	addPlatform(sf::Vector2f(1, 18), sf::Vector2f(0, 0), sf::Color(50, 50, 50));
-	addPlatform(sf::Vector2f(1, 18), sf::Vector2f(31, 0), sf::Color(50, 50, 50));
+	sf::Color clr = sf::Color(155, 100, 60);
 
-	addPlatform(sf::Vector2f(5, 1), sf::Vector2f(5, 3), sf::Color(50, 50, 50));
-	addPlatform(sf::Vector2f(5, 1), sf::Vector2f(10, 8), sf::Color(50, 50, 50));
-	addPlatform(sf::Vector2f(5, 1), sf::Vector2f(15, 11), sf::Color(50, 50, 50));
-	addPlatform(sf::Vector2f(5, 1), sf::Vector2f(20, 15), sf::Color(50, 50, 50));
+	//size in blocks, position in blocks, and color
+	addPlatform(sf::Vector2f(32.f, 1.f), sf::Vector2f(0.f, 17.f), clr);
+	addPlatform(sf::Vector2f(32.f, 1.f), sf::Vector2f(0.f, 0.f), clr);
+	addPlatform(sf::Vector2f(1.f, 18.f), sf::Vector2f(0.f, 0.f), clr);
+	addPlatform(sf::Vector2f(1.f, 18.f), sf::Vector2f(31.f, 0.f), clr);
+
+	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(5.f, 3.f), clr);
+	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(10.f, 8.f), clr);
+	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(15.f, 11.f), clr);
+	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(20.f, 15.f), clr);
 }
 
 void Map::addPlatform(sf::Vector2f size, sf::Vector2f position, sf::Color color) {	//sprite will be instead of color

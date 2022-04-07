@@ -21,7 +21,7 @@ enum Directions {
 
 //max speed (must be lower than BLOCK_SIZE)
 #define CHEL_MAX_SPEED 12.f
-#define CHEL_JUMP_SPEED 23.f
+#define MAX_FALLING_SPEED 30.0f
 
 //acceleration
 #define CHEL_ACC 0.7f

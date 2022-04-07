@@ -21,6 +21,7 @@ private:
 public:
 	Chel();
 	sf::Vector2f getCoords();
+	bool isInAir();
 
 	void getReadyToJump();
 	void Jump();

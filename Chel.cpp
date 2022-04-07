@@ -31,6 +31,11 @@ sf::Vector2f Chel::getCoords() {
 	return coords;
 }
 
+bool Chel::isInAir()
+{
+	return inAir;
+}
+
 
 void Chel::getReadyToJump() {
 	readyToJump = true;
@@ -87,8 +92,10 @@ void Chel::updating(Map* map, GameTime* gameTime) {
 				speed.y = 0;
 			}
 		}
-
 		speed.y -= G;
+		if (speed.y < -MAX_FALLING_SPEED) {
+			speed.y = -MAX_FALLING_SPEED;
+		}
 
 	}
 	else {
@@ -126,6 +133,14 @@ void Chel::updating(Map* map, GameTime* gameTime) {
 				}
 			}
 		}
+		//check if there's no platforms under the character
+		chelShape.setPosition(coords);
+		sf::FloatRect tempRect = chelShape.getGlobalBounds();
+		tempRect.top += 1;
+		if (!(map->checkCollision(tempRect, DOWN, &coords))) {
+			inAir = true;
+		}
+		////////////////////////////////////////////////////
 	}
 
 	//checking if there are collisions then moving of character

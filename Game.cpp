@@ -8,18 +8,15 @@
 #include "Chel.hpp"
 #include "Game.hpp"
 
-/////////////////////////////////////
-////////////////add://///////////////
-//Make my own sprite sheet///////////
-//Change textureRect calculation/////
-//Map scrolling//////////////////////
-//Shift acceleration/////////////////
-//object template////////////////////
-/////////////////////////////////////
-//Remove jumping while in the air////
-//add max falling speed
-//draw only if object is on the screen
-//falling off the platform
+/////////////////////////////////////////
+////////////////add://///////////////////
+//Make my own sprite sheet///////////////
+//Change textureRect calculation/////////
+//Map scrolling//////////////////////////
+//Shift acceleration???//////////////////
+//object template////////////////////////
+/////////////////////////////////////////
+//draw only if object is on the screen///
 
 
 int Game::init() {
@@ -120,7 +117,7 @@ void Game::runGame() {
 				}
 
 				//jump
-				else if (event.key.code == sf::Keyboard::Space)
+				else if (event.key.code == sf::Keyboard::Space && !chel.isInAir())	//dunno if it really works
 				{
 					chel.getReadyToJump();
 					break;
@@ -132,7 +129,7 @@ void Game::runGame() {
 			case sf::Event::KeyReleased: {
 
 				//jump
-				if (event.key.code == sf::Keyboard::Space)
+				if (event.key.code == sf::Keyboard::Space && !chel.isInAir())
 				{
 					chel.Jump();
 					break;
