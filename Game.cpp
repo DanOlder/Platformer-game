@@ -12,7 +12,8 @@
 ////////////////add://///////////////////
 //Make my own sprite sheet///////////////
 //Change textureRect calculation/////////
-//Map scrolling//////////////////////////
+// 
+//Map scrolling//////////////////////////+
 //Shift acceleration???//////////////////
 //object template////////////////////////
 /////////////////////////////////////////
@@ -21,10 +22,13 @@
 
 int Game::init() {
 	//Init window & view
-	window.create(sf::VideoMode((int)DEF_WIDTH, (int)DEF_HEIGHT), "Hi there!", sf::Style::Close);
+	screenSize.x = DEF_WIDTH;
+	screenSize.y = DEF_HEIGHT;
 
-	view.setSize(DEF_WIDTH, DEF_HEIGHT);
-	view.setCenter(DEF_WIDTH / 2.f, DEF_HEIGHT / 2.f);
+	window.create(sf::VideoMode((unsigned int)screenSize.x, (unsigned int)screenSize.y), "Hi there!", sf::Style::Close);
+
+	view.setSize(screenSize.x, screenSize.y);
+	view.setCenter(screenSize.x / 2.f, screenSize.y / 2.f);
 
 	//Init FPS settings
 	window.setFramerateLimit(60);
@@ -36,7 +40,7 @@ int Game::init() {
 	if (!bg.loadFromFile("resources/test_bg.jpg")) return -1;
 	bgShape.setTexture(&bg);
 	bgShape.setPosition(0.0f,0.0f);
-	bgShape.setSize(sf::Vector2f(DEF_WIDTH,DEF_HEIGHT));
+	bgShape.setSize(screenSize);
 
 	//Init font
 	if (!font.loadFromFile("resources/sansation.ttf")) return -1;
@@ -44,14 +48,14 @@ int Game::init() {
 	return 0;
 }
 
-void Game::onResize(sf::Vector2f size) {
+void Game::onResize() {
 
 	// Apply possible size changes
-	window.setSize((sf::Vector2u)size);
+	window.setSize((sf::Vector2u)screenSize);
 
-	// Reset grid view
-	view.setCenter(size.x / 2.f, size.y / 2.f);
-	view.setSize(size);
+	// Reset grid view			//???
+	//view.setCenter(screenSize.x / 2.f, screenSize.y / 2.f);
+	//view.setSize(screenSize);
 }
 
 void Game::runGame() {
@@ -65,7 +69,8 @@ void Game::runGame() {
 	sf::Color bg_color = sf::Color(147, 163, 188);
 
 	//start with lower resolution
-	onResize(sf::Vector2f(1024.f, 576.f));
+	screenSize = sf::Vector2f(1024.f, 576.f);
+	onResize();
 
 	//fps init
 	float fps;
@@ -92,22 +97,26 @@ void Game::runGame() {
 				//game settings
 				if (event.key.code == sf::Keyboard::Num1)
 				{
-					onResize(sf::Vector2f(1024.f, 576.f));
+					screenSize = sf::Vector2f(1024.f, 576.f);
+					onResize();
 					break;
 				}
 				else if (event.key.code == sf::Keyboard::Num2)
 				{
-					onResize(sf::Vector2f(1280.f, 720.f));
+					screenSize = sf::Vector2f(1280.f, 720.f);
+					onResize();
 					break;
 				}
 				else if (event.key.code == sf::Keyboard::Num3)
 				{
-					onResize(sf::Vector2f(1600.f, 900.f));
+					screenSize = sf::Vector2f(1600.f, 900.f);
+					onResize();
 					break;
 				}
 				else if (event.key.code == sf::Keyboard::Num4)
 				{
-					onResize(sf::Vector2f(1760.f, 990.f));
+					screenSize = sf::Vector2f(1760.f, 990.f);
+					onResize();
 					break;
 				}
 				else if (event.key.code == sf::Keyboard::Escape)
@@ -122,9 +131,21 @@ void Game::runGame() {
 					chel.getReadyToJump();
 					break;
 				}
+
+				//debug
+				else if (event.key.code == sf::Keyboard::W)
+				{
+					sf::Vector2f oldCenter = view.getCenter();
+					view.setCenter(oldCenter.x, oldCenter.y - DEF_HEIGHT);
+					view.move(0.f, 0.f);
+				}
+				else if (event.key.code == sf::Keyboard::S)
+				{
+					sf::Vector2f oldCenter = view.getCenter();
+					view.setCenter(oldCenter.x, oldCenter.y + DEF_HEIGHT);
+					view.move(0.f, 0.f);
+				}
 				
-
-
 			}
 			case sf::Event::KeyReleased: {
 
@@ -137,10 +158,15 @@ void Game::runGame() {
 			}
 			}
 		}
+
 		chel.updating(&map, &gameTime);
 
-		window.clear(bg_color);
+		//responsible for view change
+		map.updating(chel.getSpriteRect(), &view, screenSize);
 
+		window.setView(view);
+
+		window.clear(bg_color);
 		window.draw(bgShape);
 
 		map.draw(window);

@@ -4,6 +4,7 @@ class Game {
 private:
 	sf::RenderWindow window;
 	sf::View view;
+	sf::Vector2f screenSize;
 
 	sf::Texture bg;
 	sf::RectangleShape bgShape;
@@ -11,7 +12,7 @@ private:
 
 public:
 	int init();
-	void onResize(sf::Vector2f);
+	void onResize();
 	void runGame();
 };
 /*

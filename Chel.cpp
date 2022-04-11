@@ -10,8 +10,8 @@
 
 
 Chel::Chel() {
-	coords.x = 935;
-	coords.y = 700;
+	coords.x = 300;
+	coords.y = 100;
 
 	speed.x = 0;
 	speed.y = 0;
@@ -29,6 +29,11 @@ Chel::Chel() {
 
 sf::Vector2f Chel::getCoords() {
 	return coords;
+}
+
+sf::FloatRect Chel::getSpriteRect()
+{
+	return chelShape.getGlobalBounds();
 }
 
 bool Chel::isInAir()
