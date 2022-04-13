@@ -14,4 +14,5 @@ public:
 	void updating(sf::FloatRect, sf::View*, sf::Vector2f);
 	void draw(sf::RenderWindow&);
 	bool checkCollision(sf::FloatRect, Directions, sf::Vector2f*);
+	void parsingMap();
 };

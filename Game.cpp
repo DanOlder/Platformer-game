@@ -8,17 +8,17 @@
 #include "Chel.hpp"
 #include "Game.hpp"
 
-/////////////////////////////////////////
-////////////////add://///////////////////
-//Make my own sprite sheet///////////////
-//Change textureRect calculation/////////
-// 
-//Map scrolling//////////////////////////+
-//Shift acceleration???//////////////////
-//object template////////////////////////
-/////////////////////////////////////////
-//draw only if object is on the screen///
-
+//////////////////////////////////////////////////////////////////////////
+//----------------------------add:--------------------------------------//
+//----------Make my own sprite sheet------------------------------------//
+//----------Change textureRect calculation------------------------------//
+//----------Optimize collitions check (threads or only near block)------//
+//																		//
+//----------Shift acceleration???---------------------------------------//
+//----------object template---------------------------------------------//
+//																		//
+//----------draw only if object is on the screen------------------------//
+//////////////////////////////////////////////////////////////////////////
 
 int Game::init() {
 	//Init window & view
@@ -37,10 +37,10 @@ int Game::init() {
 	window.setKeyRepeatEnabled(false);
 
 	//Init background
-	if (!bg.loadFromFile("resources/test_bg.jpg")) return -1;
+	if (!bg.loadFromFile("resources/game bg.png")) return -1;
 	bgShape.setTexture(&bg);
-	bgShape.setPosition(0.0f,0.0f);
-	bgShape.setSize(screenSize);
+	bgShape.setPosition(0.0f, -screenSize.y * 4.f);
+	bgShape.setSize(sf::Vector2f(screenSize.x, screenSize.y*5));
 
 	//Init font
 	if (!font.loadFromFile("resources/sansation.ttf")) return -1;
@@ -60,14 +60,6 @@ void Game::onResize() {
 
 void Game::runGame() {
 
-	sf::Event event;
-
-	GameTime gameTime;
-	Chel chel;
-	Map map;
-
-	sf::Color bg_color = sf::Color(147, 163, 188);
-
 	//start with lower resolution
 	screenSize = sf::Vector2f(1024.f, 576.f);
 	onResize();
@@ -77,8 +69,7 @@ void Game::runGame() {
 
 	sf::Text fps_text;
 	fps_text.setFont(font);
-	fps_text.setFillColor(sf::Color(100, 0, 0));
-	fps_text.setPosition(20, 20);
+	fps_text.setFillColor(sf::Color(0, 0, 0));
 
 
 	while (window.isOpen())
@@ -166,7 +157,7 @@ void Game::runGame() {
 
 		window.setView(view);
 
-		window.clear(bg_color);
+		window.clear();
 		window.draw(bgShape);
 
 		map.draw(window);
@@ -179,6 +170,7 @@ void Game::runGame() {
 		//////////////FPS///////////////
 		fps = 1.0f / gameTime.refresh();
 
+		fps_text.setPosition(20, map.screenCounter * -1080.f + 20);
 		fps_text.setString(std::to_string((int)floor(fps)));
 		window.draw(fps_text);
 		////////////////////////////////

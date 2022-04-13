@@ -15,8 +15,8 @@ enum Directions {
 #define BLOCK_SIZE 60.f
 
 //size of hitbox/sprite
-#define CHEL_HITBOX_WIDHT 90.f
-#define CHEL_HITBOX_HEIGHT 92.f
+#define CHEL_HITBOX_WIDHT 80.f
+#define CHEL_HITBOX_HEIGHT 80.f
 
 
 //max speed (must be lower than BLOCK_SIZE)
@@ -29,4 +29,6 @@ enum Directions {
 
 //jumping
 #define MAX_HOLDING_SPACE_TIME 0.5f
-#define MAX_JUMP_SPEED 20.0f
+#define MAX_JUMP_SPEED 19.2f
+
+#define BOUNCE_RATIO 0.3f

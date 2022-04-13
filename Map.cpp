@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <algorithm>
+#include <fstream>
 
 #include "Constants.hpp"
 #include "GameTime.hpp"
@@ -10,42 +11,59 @@
 
 Map::Map() {
 
-	screenCounter = 1;
+	screenCounter = 0;
 
-	//for this demo will be made 1 level with 5 screens
+	//run Python script for refreshing map
+	system("cd resources && python refreshMap.py");
+	printf("refreshing done");
+	parsingMap();
 
-	sf::Color clr = sf::Color(155, 100, 60);
+}
 
-	//size in blocks, position in blocks, and color
-	//walls and floor
-	addPlatform(sf::Vector2f(32.f, 1.f), sf::Vector2f(0.f, 17.f), clr);
-	addPlatform(sf::Vector2f(32.f, 1.f), sf::Vector2f(0.f, -72.f), clr);
-	addPlatform(sf::Vector2f(1.f, 90.f), sf::Vector2f(0.f, -72.f), clr);
-	addPlatform(sf::Vector2f(1.f, 90.f), sf::Vector2f(31.f, -72.f), clr);
 
-	//first screen platforms
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(5.f, 3.f), clr);
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(10.f, 8.f), clr);
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(15.f, 11.f), clr);
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(20.f, 15.f), clr);
+void Map::parsingMap() {
 
-	//second screen platforms	
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(20.f, 3.f-18.f), clr);
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(15.f, 8.f - 18.f), clr);
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(10.f, 11.f - 18.f), clr);
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(8.f, 15.f - 18.f), clr);
+	sf::Color clr = sf::Color::Transparent;
 
-	//third screen platforms
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(5.f, 3.f - 36.f), clr);
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(10.f, 8.f - 36.f), clr);
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(15.f, 11.f - 36.f), clr);
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(22.f, 15.f - 36.f), clr);
 
-	//fifth screen platforms
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(20.f, 3.f - 54.f), clr);
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(15.f, 8.f - 54.f), clr);
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(10.f, 11.f - 54.f), clr);
-	addPlatform(sf::Vector2f(5.f, 1.f), sf::Vector2f(0.f, 15.f - 54.f), clr);
+	std::ifstream file("resources/map.txt");
+	
+	int x = 0;
+	int y = 0;
+
+	char block = 0;
+
+	while (!file.eof()) {
+		file >> block;
+
+		if (block == 'D' || block == 'B' || block == 'W') {
+			// for the last screen floor appearing
+			if (y != 17 || x == 0 || x == 31) {
+				addPlatform(sf::Vector2f(1.f, 1.f), sf::Vector2f(float(x), -72.f + float(y)), clr);
+			}
+		}
+
+		/*switch (block) {
+			case 'D': {
+				addPlatform(sf::Vector2f(1.f, 1.f), sf::Vector2f(float(x), -72.f + float(y)), clr);
+				break;
+			}
+			case 'W': {
+				addPlatform(sf::Vector2f(1.f, 1.f), sf::Vector2f(float(x), -72.f + float(y)), clr);
+				break;
+			}
+			case 'B': {
+				addPlatform(sf::Vector2f(1.f, 1.f), sf::Vector2f(float(x), -72.f + float(y)), clr);
+				break;
+			}
+		}*/
+		x++;
+		if (x > 31) {
+			x = 0;
+			y++;
+		}
+	}
+
 }
 
 void Map::addPlatform(sf::Vector2f size, sf::Vector2f position, sf::Color color) {	//sprite will be instead of color
@@ -66,7 +84,7 @@ void Map::addPlatform(sf::Vector2f size, sf::Vector2f position, sf::Color color)
 
 void Map::lastPhaseInit() {
 	//for only first level
-	addPlatform(sf::Vector2f(32.f, 1.f), sf::Vector2f(0.f, -55.f), sf::Color(155, 100, 60));
+	addPlatform(sf::Vector2f(32.f, 1.f), sf::Vector2f(0.f, -55.f), sf::Color::Transparent);
 }
 
 void Map::updating(sf::FloatRect chelRect, sf::View* view, sf::Vector2f screenSize) {
@@ -75,13 +93,12 @@ void Map::updating(sf::FloatRect chelRect, sf::View* view, sf::Vector2f screenSi
 	float topBorder = 0 - screenCounter * DEF_HEIGHT;
 	float bottomBorder = DEF_HEIGHT - screenCounter * DEF_HEIGHT;
 
-	//*2 for placing the floor on the last screen
-	if (chelRect.top + chelRect.height *2 < topBorder) {
+	if ((screenCounter < 3 && chelRect.top + chelRect.height < topBorder)||(screenCounter == 3 && (chelRect.top + chelRect.height + BLOCK_SIZE < topBorder)) ) {
 		sf::Vector2f oldCenter = view->getCenter();
 		view->setCenter(oldCenter.x, oldCenter.y - DEF_HEIGHT);
 		view->move(0.f, 0.f);
 		screenCounter++;
-		if (screenCounter == 5) {
+		if (screenCounter == 4) {
 			lastPhaseInit();
 		}
 	}

@@ -10,8 +10,10 @@
 
 
 Chel::Chel() {
-	coords.x = 300;
-	coords.y = 100;
+	//coords.x = 900;
+	//coords.y = 150;
+	coords.x = 1200;
+	coords.y = -3050;
 
 	speed.x = 0;
 	speed.y = 0;
@@ -164,7 +166,7 @@ void Chel::updating(Map* map, GameTime* gameTime) {
 
 		chelShape.setPosition(coords);
 		if (map->checkCollision(chelShape.getGlobalBounds(), LEFT, &coords)) {
-			speed.x = -speed.x * 0.5f;
+			speed.x = -speed.x * BOUNCE_RATIO;
 		}
 	}
 

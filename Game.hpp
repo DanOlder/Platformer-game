@@ -2,6 +2,13 @@
 
 class Game {
 private:
+
+	GameTime gameTime;
+	Chel chel;
+	Map map;
+
+	sf::Event event;
+
 	sf::RenderWindow window;
 	sf::View view;
 	sf::Vector2f screenSize;
