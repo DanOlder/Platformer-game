@@ -1,6 +1,4 @@
-#include <SFML/Graphics.hpp>
-
-#include "Animation.hpp"
+#include "Hyperheader.hpp"
 
 Animation::Animation(){
 

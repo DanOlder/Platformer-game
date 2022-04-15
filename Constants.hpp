@@ -14,6 +14,10 @@ enum Directions {
 //block size
 #define BLOCK_SIZE 60.f
 
+//chel pos
+#define CHEL_DEF_POS_X 23.f
+#define CHEL_DEF_POS_Y -41.f
+
 //size of hitbox/sprite
 #define CHEL_HITBOX_WIDHT 80.f
 #define CHEL_HITBOX_HEIGHT 80.f

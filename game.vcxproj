@@ -369,8 +369,10 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Chel.cpp" />
+    <ClCompile Include="EnemyFly.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="liveobject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
   </ItemGroup>
@@ -493,6 +495,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Animation.hpp" />
     <ClInclude Include="Chel.hpp" />
     <ClInclude Include="Constants.hpp" />
+    <ClInclude Include="EnemyFly.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio\AlResource.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio\Export.hpp" />
@@ -593,6 +596,8 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="extlibs\include\SFML\Window\WindowStyle.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameTime.hpp" />
+    <ClInclude Include="Hyperheader.hpp" />
+    <ClInclude Include="liveobject.hpp" />
     <ClInclude Include="Map.hpp" />
   </ItemGroup>
   <ItemGroup>

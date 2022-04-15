@@ -1,6 +1,4 @@
-#include <SFML/Graphics.hpp>
-
-#include "GameTime.hpp"
+#include "Hyperheader.hpp"
 
 GameTime::GameTime(){
 

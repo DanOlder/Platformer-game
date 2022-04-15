@@ -15,4 +15,15 @@ public:
 	void draw(sf::RenderWindow&);
 	bool checkCollision(sf::FloatRect, Directions, sf::Vector2f*);
 	void parsingMap();
+
+	template<typename T>
+	void enemyAppears();
 };
+
+//template definition should be here in hpp
+template<typename T>
+inline void Map::enemyAppears()
+{
+	T enemy;
+
+}

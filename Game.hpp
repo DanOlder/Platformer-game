@@ -4,7 +4,7 @@ class Game {
 private:
 
 	GameTime gameTime;
-	Chel chel;
+	Chel chel = Chel(sf::Vector2f(CHEL_DEF_POS_X, CHEL_DEF_POS_Y));
 	Map map;
 
 	sf::Event event;
@@ -22,35 +22,3 @@ public:
 	void onResize();
 	void runGame();
 };
-/*
-class Object {
-private:
-	sf::Vector2f coords;
-	sf::FloatRect hitbox;
-	sf::RectangleShape chelShape;
-	sf::Texture chelTexture;
-public:
-	Object();
-	sf::Vector2f getCoords();
-	sf::FloatRect getHitbox();
-};
-
-Object::Object() {
-
-}
-
-sf::Vector2f Object::getCoords() {
-
-}
-
-sf::FloatRect Object::getHitbox() {
-
-}
-
-
-class AnimatedObject : Object {
-private:
-
-public:
-
-};*/

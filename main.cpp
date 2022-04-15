@@ -1,11 +1,4 @@
-#include <SFML/Graphics.hpp>
-
-#include "Constants.hpp"
-#include "GameTime.hpp"
-#include "Animation.hpp"
-#include "Map.hpp"
-#include "Chel.hpp"
-#include "Game.hpp"
+#include "Hyperheader.hpp"
 
 int main(){
 

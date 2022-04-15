@@ -1,13 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <algorithm>
-#include <fstream>
-
-#include "Constants.hpp"
-#include "GameTime.hpp"
-#include "Animation.hpp"
-#include "Map.hpp"
-#include "Chel.hpp"
-#include "Game.hpp"
+#include "Hyperheader.hpp"
 
 Map::Map() {
 
@@ -19,7 +10,6 @@ Map::Map() {
 	parsingMap();
 
 }
-
 
 void Map::parsingMap() {
 
@@ -43,20 +33,6 @@ void Map::parsingMap() {
 			}
 		}
 
-		/*switch (block) {
-			case 'D': {
-				addPlatform(sf::Vector2f(1.f, 1.f), sf::Vector2f(float(x), -72.f + float(y)), clr);
-				break;
-			}
-			case 'W': {
-				addPlatform(sf::Vector2f(1.f, 1.f), sf::Vector2f(float(x), -72.f + float(y)), clr);
-				break;
-			}
-			case 'B': {
-				addPlatform(sf::Vector2f(1.f, 1.f), sf::Vector2f(float(x), -72.f + float(y)), clr);
-				break;
-			}
-		}*/
 		x++;
 		if (x > 31) {
 			x = 0;
@@ -66,7 +42,7 @@ void Map::parsingMap() {
 
 }
 
-void Map::addPlatform(sf::Vector2f size, sf::Vector2f position, sf::Color color) {	//sprite will be instead of color
+void Map::addPlatform(sf::Vector2f size, sf::Vector2f position, sf::Color color) {
 
 	size.x *= BLOCK_SIZE;
 	size.y *= BLOCK_SIZE;

@@ -1,19 +1,6 @@
-#include <SFML/Graphics.hpp>
+#include "Hyperheader.hpp"
 
-#include "Constants.hpp"
-#include "GameTime.hpp"
-#include "Animation.hpp"
-#include "Map.hpp"
-#include "Chel.hpp"
-#include "Game.hpp"
-
-
-
-Chel::Chel() {
-	//coords.x = 900;
-	//coords.y = 150;
-	coords.x = 1200;
-	coords.y = -3050;
+Chel::Chel(sf::Vector2f pos) : liveObject(pos) {
 
 	speed.x = 0;
 	speed.y = 0;
@@ -24,18 +11,9 @@ Chel::Chel() {
 
 	//animation (vector is how much sprites in the sheet(x and y))
 	if (!chelTexture.loadFromFile("resources/test_sprites.png")) exit(666);
-	chelShape.setSize((sf::Vector2f(CHEL_HITBOX_WIDHT, CHEL_HITBOX_HEIGHT)));
-	chelShape.setTexture(&chelTexture);
-	chelAnimation.init(&chelTexture, sf::Vector2u(4,1), 0.1f);
-}
-
-sf::Vector2f Chel::getCoords() {
-	return coords;
-}
-
-sf::FloatRect Chel::getSpriteRect()
-{
-	return chelShape.getGlobalBounds();
+	hitbox.setSize((sf::Vector2f(CHEL_HITBOX_WIDHT, CHEL_HITBOX_HEIGHT)));
+	hitbox.setTexture(&chelTexture);
+	animation.init(&chelTexture, sf::Vector2u(4,1), 0.1f);
 }
 
 bool Chel::isInAir()
@@ -63,18 +41,11 @@ void Chel::Jump() {
 	inAir = true;
 }
 
-void Chel::draw(sf::RenderWindow& window) {
-
-	//sprite
-	chelShape.setPosition(coords);
-	window.draw(chelShape);
-}
-
 void Chel::updating(Map* map, GameTime* gameTime) {
 
 	//params in update are row and deltaTime
-	chelAnimation.update(0,gameTime->deltaTime);//mb move in the end of method
-	chelShape.setTextureRect(chelAnimation.spriteRect);
+	animation.update(0,gameTime->deltaTime);//mb move in the end of method
+	hitbox.setTextureRect(animation.spriteRect);
 
 	if (inAir) {				//return when chel landed
 
@@ -83,8 +54,8 @@ void Chel::updating(Map* map, GameTime* gameTime) {
 
 			coords.y -= speed.y;
 			
-			chelShape.setPosition(coords);
-			if (map->checkCollision(chelShape.getGlobalBounds(), DOWN, &coords)) {
+			hitbox.setPosition(coords);
+			if (map->checkCollision(hitbox.getGlobalBounds(), DOWN, &coords)) {
 				speed.y = 0;
 				inAir = false;
 				return;
@@ -94,8 +65,8 @@ void Chel::updating(Map* map, GameTime* gameTime) {
 
 			coords.y -= speed.y;
 
-			chelShape.setPosition(coords);
-			if (map->checkCollision(chelShape.getGlobalBounds(), UP, &coords)) {
+			hitbox.setPosition(coords);
+			if (map->checkCollision(hitbox.getGlobalBounds(), UP, &coords)) {
 				speed.y = 0;
 			}
 		}
@@ -141,8 +112,8 @@ void Chel::updating(Map* map, GameTime* gameTime) {
 			}
 		}
 		//check if there's no platforms under the character
-		chelShape.setPosition(coords);
-		sf::FloatRect tempRect = chelShape.getGlobalBounds();
+		hitbox.setPosition(coords);
+		sf::FloatRect tempRect = hitbox.getGlobalBounds();
 		tempRect.top += 1;
 		if (!(map->checkCollision(tempRect, DOWN, &coords))) {
 			inAir = true;
@@ -155,8 +126,8 @@ void Chel::updating(Map* map, GameTime* gameTime) {
 
 		coords.x += speed.x;
 
-		chelShape.setPosition(coords);
-		if (map->checkCollision(chelShape.getGlobalBounds(), RIGHT, &coords)) {
+		hitbox.setPosition(coords);
+		if (map->checkCollision(hitbox.getGlobalBounds(), RIGHT, &coords)) {
 			speed.x = -speed.x * 0.5f;
 		}
 	}
@@ -164,8 +135,8 @@ void Chel::updating(Map* map, GameTime* gameTime) {
 
 		coords.x += speed.x;
 
-		chelShape.setPosition(coords);
-		if (map->checkCollision(chelShape.getGlobalBounds(), LEFT, &coords)) {
+		hitbox.setPosition(coords);
+		if (map->checkCollision(hitbox.getGlobalBounds(), LEFT, &coords)) {
 			speed.x = -speed.x * BOUNCE_RATIO;
 		}
 	}

@@ -1,15 +1,8 @@
-#include <SFML/Graphics.hpp>
-#include <string>
-
-#include "Constants.hpp"
-#include "GameTime.hpp"
-#include "Animation.hpp"
-#include "Map.hpp"
-#include "Chel.hpp"
-#include "Game.hpp"
+#include "Hyperheader.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 //----------------------------add:--------------------------------------//
+//----------Sort headers------------------------------------------------//
 //----------Make my own sprite sheet------------------------------------//
 //----------Change textureRect calculation------------------------------//
 //----------Optimize collitions check (threads or only near block)------//
@@ -17,7 +10,13 @@
 //----------Shift acceleration???---------------------------------------//
 //----------object template---------------------------------------------//
 //																		//
-//----------draw only if object is on the screen------------------------//
+//----draw and check collisions only if object is on the screen---------//
+//--------or on the adjoined borders of other screens-------------------//
+//------------------(also it'd be nice to place objects-----------------//
+//----------------------from different screens to different vectors)----//
+// 
+//+++hyperheader added
+//+++parent class for all animated objects added
 //////////////////////////////////////////////////////////////////////////
 
 int Game::init() {
@@ -53,9 +52,6 @@ void Game::onResize() {
 	// Apply possible size changes
 	window.setSize((sf::Vector2u)screenSize);
 
-	// Reset grid view			//???
-	//view.setCenter(screenSize.x / 2.f, screenSize.y / 2.f);
-	//view.setSize(screenSize);
 }
 
 void Game::runGame() {
@@ -117,7 +113,7 @@ void Game::runGame() {
 				}
 
 				//jump
-				else if (event.key.code == sf::Keyboard::Space && !chel.isInAir())	//dunno if it really works
+				else if (event.key.code == sf::Keyboard::Space && !chel.isInAir())
 				{
 					chel.getReadyToJump();
 					break;
