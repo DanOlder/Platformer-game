@@ -77,6 +77,10 @@ void Map::updating(sf::FloatRect chelRect, sf::View* view, sf::Vector2f screenSi
 		if (screenCounter == 4) {
 			lastPhaseInit();
 		}
+		else if (screenCounter == 1) {
+
+			
+		}
 	}
 	else if (chelRect.top > bottomBorder) {
 		sf::Vector2f oldCenter = view->getCenter();
@@ -84,6 +88,8 @@ void Map::updating(sf::FloatRect chelRect, sf::View* view, sf::Vector2f screenSi
 		view->move(0.f, 0.f);
 		screenCounter--;
 	}
+
+
 }
 
 void Map::draw(sf::RenderWindow& window) {
@@ -93,6 +99,9 @@ void Map::draw(sf::RenderWindow& window) {
 	for (auto& i : platforms) {
 		window.draw(i);
 	}
+	//for (auto& i : enemyVec) {
+	//	i.draw(window);
+	//}
 }
 
 

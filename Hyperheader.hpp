@@ -4,13 +4,17 @@
 
 #include <algorithm>
 #include <fstream>
+#include <variant>
 #include <string>
+#include <vector>
 
 #include "Constants.hpp"
 #include "GameTime.hpp"
 #include "Animation.hpp"
-#include "liveobject.hpp"
 #include "Map.hpp"
-#include "Chel.hpp"
+#include "liveobject.hpp"
 #include "EnemyFly.hpp"
+#include "Enemies.hpp"
+
+#include "Chel.hpp"
 #include "Game.hpp"

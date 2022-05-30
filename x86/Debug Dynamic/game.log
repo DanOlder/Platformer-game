@@ -5,6 +5,7 @@
           1 file(s) copied.
           1 file(s) copied.
   A subdirectory or file C:\Users\Daniel af\source\repos\game\x86\Debug Dynamic\resources already exists.
+  C:\Users\Daniel af\source\repos\game\resources\bat.png
   C:\Users\Daniel af\source\repos\game\resources\Fuck_you_Sound_Effect.wav
   C:\Users\Daniel af\source\repos\game\resources\game bg.png
   C:\Users\Daniel af\source\repos\game\resources\map.txt
@@ -12,6 +13,7 @@
   C:\Users\Daniel af\source\repos\game\resources\sansation.ttf
   C:\Users\Daniel af\source\repos\game\resources\test_bg.jpg
   C:\Users\Daniel af\source\repos\game\resources\test_sprites.png
-          7 file(s) copied.
-  liveobject.cpp
+          8 file(s) copied.
+  Game.cpp
+  class template variant is only available with C++17 or later.
   game.vcxproj -> C:\Users\Daniel af\source\repos\game\x86\Debug Dynamic\game.exe

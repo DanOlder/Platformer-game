@@ -5,7 +5,9 @@ private:
 
 	GameTime gameTime;
 	Chel chel = Chel(sf::Vector2f(CHEL_DEF_POS_X, CHEL_DEF_POS_Y));
+	int enemySheet;
 	Map map;
+	Enemies enemies;
 
 	sf::Event event;
 

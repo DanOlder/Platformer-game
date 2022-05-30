@@ -44,6 +44,8 @@ int Game::init() {
 	//Init font
 	if (!font.loadFromFile("resources/sansation.ttf")) return -1;
 
+	enemySheet = 0;
+
 	return 0;
 }
 
@@ -151,12 +153,26 @@ void Game::runGame() {
 		//responsible for view change
 		map.updating(chel.getSpriteRect(), &view, screenSize);
 
+		int screenCounter = map.screenCounter;
+		if (screenCounter != enemySheet) {
+			enemies.removeEnemies();
+			enemies.placeEnemies(screenCounter);
+			enemySheet = screenCounter;
+		}
+
 		window.setView(view);
 
 		window.clear();
 		window.draw(bgShape);
 
 		map.draw(window);
+
+
+		//for (int i = 0; i < 1 && enemies.enemyVec.size() != 0; i++) {
+		//	enemies.enemyVec[i]->updating(&map, &gameTime);
+		//	enemies.enemyVec[i]->draw(window);
+		//}
+
 		chel.draw(window);
 
 	

@@ -369,6 +369,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Chel.cpp" />
+    <ClCompile Include="Enemies.cpp" />
     <ClCompile Include="EnemyFly.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameTime.cpp" />
@@ -495,6 +496,7 @@ copy /Y "$(SolutionDir)resources"  "$(TargetDir)resources\"</Command>
     <ClInclude Include="Animation.hpp" />
     <ClInclude Include="Chel.hpp" />
     <ClInclude Include="Constants.hpp" />
+    <ClInclude Include="Enemies.hpp" />
     <ClInclude Include="EnemyFly.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio.hpp" />
     <ClInclude Include="extlibs\include\SFML\Audio\AlResource.hpp" />

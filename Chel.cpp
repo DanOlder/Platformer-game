@@ -128,7 +128,7 @@ void Chel::updating(Map* map, GameTime* gameTime) {
 
 		hitbox.setPosition(coords);
 		if (map->checkCollision(hitbox.getGlobalBounds(), RIGHT, &coords)) {
-			speed.x = -speed.x * 0.5f;
+			speed.x = -speed.x * BOUNCE_RATIO;
 		}
 	}
 	else if (speed.x < 0) {

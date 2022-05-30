@@ -15,13 +15,16 @@ enum Directions {
 #define BLOCK_SIZE 60.f
 
 //chel pos
-#define CHEL_DEF_POS_X 23.f
-#define CHEL_DEF_POS_Y -41.f
+#define CHEL_DEF_POS_X 5.f
+#define CHEL_DEF_POS_Y 10.f
 
-//size of hitbox/sprite
+//size of chel's hitbox/sprite
 #define CHEL_HITBOX_WIDHT 80.f
 #define CHEL_HITBOX_HEIGHT 80.f
 
+//size of bat's hitbox/sprite
+#define BAT_HITBOX_WIDHT 80.f
+#define BAT_HITBOX_HEIGHT 80.f
 
 //max speed (must be lower than BLOCK_SIZE)
 #define CHEL_MAX_SPEED 12.f
